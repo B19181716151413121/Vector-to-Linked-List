@@ -8,73 +8,44 @@
 
 #include <iostream>
 #include <vector>
+#include <list>
 using namespace std;
 
-class NumberList
+template <class t>
+list <t> copyList (vector <vector <t>> vec)
 {
-private:
-    struct ListNode
-    {
-        double value;
-        struct ListNode *next;
-    };
+    list <t> *ll;
+    ll = new list <int> [vec.size()];
     
-    ListNode *head;
-    
-public:
-    NumberList()
-    { head = nullptr; }
-    
-    ~NumberList();
-    
-    void appendNode(double num)
-    {
-        ListNode *newNode;
-        ListNode *nodePtr;
-        
-        newNode = new ListNode;
-        newNode->value = num;
-        newNode->next = nullptr;
-        
-        if (!head)
-            head = newNode;
-        else
-        {
-            nodePtr = head;
-            
-            while (nodePtr->next)
-                nodePtr = nodePtr->next;
-            
-            nodePtr->next = newNode;
-        }
-    }
-    
-    void displayList() const
-    {
-        ListNode *nodePtr;
-        
-        nodePtr = head;
-        
-        while (nodePtr)
-        {
-            cout << nodePtr->value << endl;
-            nodePtr = nodePtr->next;
-        }
-    }
-};
-
-int main()
-{
-    vector <vector <int> > vec = { {1}, {1,2}, {1,2,3} };
-    
+    cout << "VECTOR" << endl;
     for (int i = 0; i < vec.size(); i++)
     {
         for (int j = 0; j < vec[i].size(); j++)
         {
+            ll[i].push_back(vec[i][j]);
             cout << vec[i][j] << " ";
         }
         cout << endl;
     }
+    
+    cout << endl << "LINKED LIST" << endl;
+    for (int j = 0; j < vec.size(); j++)
+    {
+        for (int i:ll[j])
+        {
+            cout << i << " ";
+        }
+        cout << endl;
+    }
+    return *ll;
+}
+
+int main()
+{
+    vector <vector <int> > vec = { {1}, {1,2}, {1,2,3} };
+    list <int> ll = copyList(vec);
+    
+    
     
     return 0;
 }
